@@ -22,7 +22,7 @@ class ChatBar extends Component {
   }
 
   enter(event) {
-
+  
   }
 
   render() {
@@ -30,13 +30,16 @@ class ChatBar extends Component {
       <footer className="chatbar">
         <input
           className="chatbar-username"
-          placeholder="Your Name (Optional)"
+          placeholder={this.props.username}
           value={this.state.username}
+          onChange={this.onUsername.bind(this)}
         />
         <input
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
           value={this.state.content}
+          onChange={this.onContent.bind(this)}
+          onKeyDown={this.enter.bind(this)}
         />
       </footer>
     );
