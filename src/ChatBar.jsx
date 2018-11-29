@@ -35,7 +35,7 @@ class ChatBar extends Component {
       <footer className="chatbar">
         <input
           className="chatbar-username"
-          placeholder={this.props.username}
+          placeholder={this.props.currentUser}
           value={this.state.username}
           onChange={this.onUsername.bind(this)}
         />
