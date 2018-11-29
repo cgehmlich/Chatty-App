@@ -8,7 +8,9 @@ class MessageList extends Component {
             const post = this.props.messages.map(post => {
               return <Message
                   username={ post.username }
-                  content={ post.content }/>
+                  content={ post.content }
+                  key={ post.key}
+                  type={ post.type} />
             });
       
             return (

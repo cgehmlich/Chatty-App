@@ -1,5 +1,5 @@
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class ChatBar extends Component {
 
@@ -14,15 +14,20 @@ class ChatBar extends Component {
   onUsername(event) {
     const usernameOld = this.state.username
     const username = event.target.value
-    this.setState({username})
+    this.setState({ username })
   }
 
   onContent(event) {
-    this.setState({content: event.target.value})
+    this.setState({ content: event.target.value })
   }
 
-  enter(event) {
-  
+  onEnter(event) {
+    if (event.key === 'Enter') {
+      this.props.newMessage(this.state.username, this.state.content, "postMessage")
+      this.setState({
+        content: ''
+      });
+    }
   }
 
   render() {
@@ -39,7 +44,7 @@ class ChatBar extends Component {
           placeholder="Type a message and hit ENTER"
           value={this.state.content}
           onChange={this.onContent.bind(this)}
-          onKeyDown={this.enter.bind(this)}
+          onKeyDown={this.onEnter.bind(this)}
         />
       </footer>
     );
