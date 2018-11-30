@@ -2,6 +2,7 @@
 
 // Load up the application styles
 require("../styles/application.scss");
+const uuid = require('uuid');
 
 // Render the top-level React component
 import React from 'react';

@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import Message from './Message.jsx';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
+const uuid = require('uuid');
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: 'anonymous',
-      messages: []
+      messages: [],
+      numberOfClients: 0,
+      clientColor: ''
     }
   }
 
@@ -19,6 +22,12 @@ class App extends Component {
     }
     this.connection.onmessage = (event) => {
       const message = JSON.parse(event.data);
+      if(message.type === 'numberOfClients'){
+        this.setState({
+          onlineUser: message.clientSize,
+          userColor: message.color
+        });
+      }
       const messages = this.state.messages.concat(message);
       this.setState({
         messages: messages
@@ -39,7 +48,9 @@ class App extends Component {
     const message = {
       username,
       content,
-      type
+      type,
+      id: uuid(),
+      clientColor: this.state.clientColor
     };
     this.setState({currentUser: username})
     this.connection.send(JSON.stringify(message));
@@ -48,8 +59,12 @@ class App extends Component {
   render() {
     return (
       <div>
+        <nav className="navbar">
+          <a href="/" className="navbar-brand">Chatty</a>
+          <span className="counter">{this.state.onlineUser} user(s) online</span>
+        </nav>
         <ChatBar currentUser={this.state.currentUser} newMessage={this.newMessage.bind(this)} />
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} clientColor={this.state.clientColor}/>
       </div>
     );
   }

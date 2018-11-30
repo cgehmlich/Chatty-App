@@ -1,6 +1,7 @@
 
 import React, {Component} from 'react';
 import Message from './Message.jsx';
+const uuid = require('uuid');
 
 class MessageList extends Component {
 
@@ -10,7 +11,8 @@ class MessageList extends Component {
                   username={ post.username }
                   content={ post.content }
                   key={ post.id}
-                  type={ post.type} />
+                  type={ post.type} 
+                  color={ post.clientColor} />
             });
       
             return (
