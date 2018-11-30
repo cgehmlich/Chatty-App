@@ -1,45 +1,33 @@
-React Boilerplate
-=====================
+# Chatty App
 
-A minimal and light dev environment for ReactJS.
+A realtime chat application utilizing React, Babel, SCSS, and WebSockets.
 
-### Usage
+## Getting Started
 
-Clone the boilerplate and create your own git repo.
+1. Fork this repository, then clone your fork of this repository.
+2. Install dependencies using the `npm install` command.
+3. Start the web server using the `npm start` command. The app will be served at <http://localhost:3000/>.
+4. Go to <http://localhost:3000/> in your browser.
+5. Enter username and message then hit enter.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+## Screenshots
 
-Install the dependencies and start the server.
+!["Chatty1"](https://github.com/cgehmlich/chatty-app/blob/master/screenshots/chatty1.png)
+!["Chatty2"](https://github.com/cgehmlich/chatty-app/blob/master/screenshots/chatty2.png)
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+## Dependencies
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
-
-### Dependencies
-
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+    "babel-core": "6.23.1",
+    "babel-loader": "6.3.1",
+    "babel-preset-es2015": "6.22.0",
+    "babel-preset-react": "6.23.0",
+    "babel-preset-stage-0": "6.22.0",
+    "css-loader": "0.26.1",
+    "eslint": "3.15.0",
+    "eslint-plugin-react": "6.9.0",
+    "node-sass": "4.5.0",
+    "sass-loader": "6.0.0",
+    "sockjs-client": "^1.1.2",
+    "style-loader": "0.13.1",
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.3.0"

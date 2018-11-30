@@ -7,17 +7,19 @@ const uuid = require('uuid');
 // Set the port to 3001
 const PORT = 3001;
 
+let numClients = 0;
+
 // Create a new express server
 const server = express()
-   // Make the express server serve static assets (html, javascript, css) from the /public folder
+  // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
-  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
+  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${PORT}`));
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
 function broadcast(msg) {
-  for(let client of wss.clients) {
+  for (let client of wss.clients) {
     client.send(JSON.stringify(msg));
   }
 }
@@ -26,6 +28,7 @@ function broadcast(msg) {
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  numClients++;
   ws.on('message', function incoming(data) {
     var message = JSON.parse(data)
     if (message.type === 'postMessage') {
@@ -33,32 +36,36 @@ wss.on('connection', (ws) => {
     } else if (message.type === 'postNotification') {
       message.type = 'incomingNotification';
     }
-      broadcast(message);
-})
+    broadcast(message);
+  })
 
-function getColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+  function getColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
-  return color;
-}
 
-const randomColor = {
-  type: 'clientColor',
-  color: getColor()
-}
-broadcast(randomColor);
+  const randomColor = {
+    type: 'clientColor',
+    color: getColor()
+  }
+  broadcast(randomColor);
 
-const numberOfClients = {
-  type: 'numberOfClients',
-  clientSize: wss.clients.size
-}
-broadcast(numberOfClients);
+  const onlineUser = {
+    type: 'numberOfClients',
+    clientSize: numClients
+  }
+  broadcast(onlineUser);
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
-    broadcast(numberOfClients)
-    console.log('Client disconnected')})
+    numClients--;
+    onlineUser.clientSize = numClients;
+    broadcast(onlineUser)
+    console.log(onlineUser);
+    console.log('Client disconnected')
+  })
 });

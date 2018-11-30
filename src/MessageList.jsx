@@ -1,23 +1,25 @@
 
 import React, {Component} from 'react';
 import Message from './Message.jsx';
+import App from './App.jsx';
 const uuid = require('uuid');
 
 class MessageList extends Component {
 
     render(){
-            const post = this.props.messages.map(post => {
+            const message = this.props.messages.map(message => {
               return <Message
-                  username={ post.username }
-                  content={ post.content }
-                  key={ post.id}
-                  type={ post.type} 
-                  color={ post.clientColor} />
+                  username={ message.username }
+                  content={ message.content }
+                  key={ message.id}
+                  type={ message.type} 
+                  class={message.class}
+                  clientColor={ message.clientColor} />
             });
       
             return (
               <section>
-                { post }
+                { message }
               </section>
             );
         }
